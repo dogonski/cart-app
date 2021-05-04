@@ -3,12 +3,7 @@ export const removeProduct = (id) => ({
   payload: id,
 });
 
-export const addProduct = (id, productContent) => ({
+export const addProduct = (product) => ({
   type: 'ADD_PRODUCT',
-  payload: {
-    id: { id },
-    item: {
-      ...productContent,
-    },
-  },
+  payload: product,
 });

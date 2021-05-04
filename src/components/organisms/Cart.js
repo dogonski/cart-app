@@ -6,11 +6,9 @@ import Button from 'components/atoms/Button';
 import Heading from 'components/atoms/Heading';
 import ProductCard from 'components/molecules/ProductCard';
 
-const StyledProductCard = styled(ProductCard)``;
-
 const Wrapper = styled.div`
   background: #eee;
-  position: fixed;
+  position: absolute;
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -19,15 +17,15 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  transform: translateX(${({ isOpen }) => (isOpen ? '0%' : '100%')});
+  transform: translate(${({ isOpen }) => (isOpen ? '0%' : '100%')});
 `;
 
-const Cart = ({ cart }, { isOpen }) => (
+const Cart = ({ cart, isOpen }) => (
   <>
     <Wrapper isOpen={isOpen}>
       <Heading>Cart</Heading>
       {cart.map(({ id, title, cover, price, currency, availability }) => (
-        <StyledProductCard
+        <ProductCard
           secondary
           id={id}
           cover={cover}
@@ -38,7 +36,7 @@ const Cart = ({ cart }, { isOpen }) => (
           key={id}
         >
           {title}
-        </StyledProductCard>
+        </ProductCard>
       ))}
       <Button>Purchase</Button>
     </Wrapper>
@@ -57,9 +55,11 @@ Cart.propTypes = {
       secondary: PropTypes.bool,
     }),
   ),
+  isOpen: PropTypes.bool,
 };
 
 Cart.defaultProps = {
+  isOpen: false,
   cart: [],
 };
 

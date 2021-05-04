@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   justify-items: flex-start;
   align-items: center;
   background-color: #eee;
-  width: 100vw;
+  width: 20vw;
   height: 50vh;
 
   ${({ secondary }) =>
@@ -34,10 +34,16 @@ const Cover = styled.div`
 const Title = styled.p`
   display: block;
   margin: 10px;
-  width: 400px;
+  padding: 10px;
+  width: 200px;
   height: auto;
   font-size: 1.2rem;
   text-align: ${({ secondary }) => (secondary ? 'center' : 'left')};
+  ${({ secondary }) =>
+    secondary &&
+    css`
+      width: 400px;
+    `}
 `;
 const Info = styled.p`
   font-size: 1rem;
@@ -60,27 +66,28 @@ const ProductCard = ({
   addProduct,
   removeProduct,
 }) => (
-  <>
-    <Wrapper secondary={secondary}>
-      <Cover cover={cover} />
-      <Title>{title}</Title>
-      {secondary || <OnStockBadge availability={availability} />}
-      {price == null ? (
-        <Button>Ask for price</Button>
-      ) : (
-        <Info>
-          {price.toFixed(2)}
-          {currency}
-        </Info>
-      )}
-      {availability ? (
-        <Button onClick={() => addProduct(id)}>Add to cart</Button>
-      ) : (
-        <Button>Notify me when available</Button>
-      )}
-      {secondary && <Button onClick={() => removeProduct(id)}>REMOVE</Button>}
-    </Wrapper>
-  </>
+  <Wrapper secondary={secondary}>
+    <Cover cover={cover} />
+    <Title>{title}</Title>
+    {secondary || <OnStockBadge availability={availability} />}
+    {price == null ? (
+      <Button>Ask for price</Button>
+    ) : (
+      <Info>
+        {price.toFixed(2)}
+        {currency}
+      </Info>
+    )}
+    {availability ? (
+      <Button onClick={() => addProduct({ id, title, cover, availability, price, currency })}>
+        Add to cart
+      </Button>
+    ) : (
+      <Button>Notify me when available</Button>
+    )}
+
+    {secondary && <Button onClick={() => removeProduct(id)}>REMOVE</Button>}
+  </Wrapper>
 );
 
 ProductCard.propTypes = {
@@ -103,7 +110,7 @@ ProductCard.defaultProps = {
 
 const mapDispatchToProps = (dispatch) => ({
   removeProduct: (id) => dispatch(removeProductAction(id)),
-  addProduct: (id) => dispatch(addProductAction(id)),
+  addProduct: (product) => dispatch(addProductAction(product)),
 });
 
 export default connect(null, mapDispatchToProps)(ProductCard);

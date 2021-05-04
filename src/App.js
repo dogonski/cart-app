@@ -44,7 +44,7 @@ function App() {
     <Provider store={store}>
       <GlobalStyle />
       <Heading>Products</Heading>
-      <CartButton onClick={() => openCart(true)}>CART</CartButton>
+      <CartButton onClick={() => openCart(!isOpen)}>CART</CartButton>
       <GridWrapper>
         {products.map(({ id, title, cover, availability, price, currency }) => (
           <StyledProductCard
