@@ -1,0 +1,24 @@
+    {"extends": [
+      "react-app",
+      "plugin:import/errors",
+      "plugin:import/warnings",
+      "airbnb",
+      "prettier"
+     ],
+    "rules": {
+      "import/no-unresolved": 1,
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+    },
+    "env": {
+      "browser": true,
+      "node": true
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "moduleDirectory": ["node_modules", "src/"]
+      }
+    }
+  }
+}
